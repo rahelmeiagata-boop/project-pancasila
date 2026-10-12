@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+   <title>Jejak Pancasila</title>
+   <style>
+      :root {
+         --bg: #f7f3eb;
+         --card: #fffdf8;
+         --ink: #39352f;
+         --mut: #777168;
+         --navy: #6e4636;
+         --navy2: #a85f43;
+         --red: #b65345;
+         --gold: #d59a52;
+         --line: #e7ded0;
+         --ok: #52795b;
+         --okbg: #edf4e9;
+         --warn: #a8752c;
+         --warnbg: #fbf1df;
+         --bad: #b65345;
+         --badbg: #faeae5;
+         box-sizing: border-box;
+      }
+
+      * {
+         box-sizing: border-box;
+      }
+
+      html {
+         scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+
+      body {
+         margin: 0;
+         background: radial-gradient(circle at 90% 5%, rgba(213, 154, 82, .10), transparent 24rem), var(--bg);
+         color: var(--ink);
+         font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      }
+
+      header {
+         position: sticky;
+         top: 0;
+         background: #fffdf8;
+         color: var(--ink);
+         z-index: 9;
+         border-bottom: 1px solid var(--line);
+         box-shadow: 0 3px 14px rgba(74, 54, 38, .05);
+      }
+
+      .bar {
+         max-width: 1040px;
+         margin: auto;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         padding: 10px 16px;
+      }
+
+      .logo {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         font-weight: 700;
+         font-size: 18px;
+         cursor: pointer;
+         background: none;
+         border: 0;
+         color: #6e4636;
+      }
+
+      .logo i {
+         width: 32px;
+         height: 32px;
+         border-radius: 50%;
+         background: #f0d8b8;
+         color: #6e4636;
+         display: grid;
+         place-items: center;
+         font-style: normal;
+      }
+
+      nav {
+         display: flex;
+         gap: 4px;
+      }
+
+      nav button {
+         background: none;
+         border: 0;
+         color: #6e6257;
+         padding: 8px 12px;
+         border-radius: 8px;
+         font: inherit;
+         font-size: 15px;
+         cursor: pointer;
+      }
+
+      nav button:hover,
+      nav button.on {
+         background: #f4e9dc;
+         color: #8f523d;
+      }
+
+      #burger {
+         display: none;
+         background: none;
+         border: 1px solid #d9c8b6;
+         color: #6e4636;
+         border-radius: 8px;
+         padding: 6px 12px;
+         font-size: 18px;
+         cursor: pointer;
+      }
+
+      @media(max-width:720px) {
+         #burger {
+            display: block;
+         }
+
+         nav {
+            display: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            background: #fffdf8;
+            border-bottom: 1px solid var(--line);
+            flex-direction: column;
+            padding: 8px 16px 14px;
+         }
+
+         nav.open {
+            display: flex;
+         }
+
+         nav button {
+            text-align: left;
+         }
+      }
+
+      main {
+         max-width: 1040px;
+         margin: auto;
+         padding: 24px 16px 56px;
+      }
+
+      section {
+         display: none;
+      }
+
+      section.on {
+         display: block;
+      }
+
+      h1 {
+         font-size: clamp(28px, 5vw, 42px);
+         line-height: 1.2;
+         color: #8f523d;
+         letter-spacing: -.035em;
+         margin: .2em 0;
+      }
+
+      h2 {
+         color: #8f523d;
+         margin: 1.2em 0 .5em;
+      }
+
+      h3 {
+         margin: .2em 0 .4em;
+         color: #8f523d;
+      }
+
+      .hero {
+         padding: 38px 0 18px;
+      }
+
+      .tag {
+         color: var(--red);
+         font-weight: 700;
+         letter-spacing: .06em;
+         font-size: 13px;
+         text-transform: uppercase;
+      }
+
+      .btn {
+         background: #a85f43;
+         color: #fff;
+         border: 0;
+         border-radius: 9px;
+         padding: 12px 22px;
+         font: inherit;
+         font-weight: 600;
+         cursor: pointer;
+         transition: background .18s ease, transform .18s ease;
+      }
+
+      .btn:hover {
+         background: #8f4e37;
+      }
+
+      .btn:disabled {
+         opacity: .45;
+         cursor: not-allowed;
+      }
+
+      .btn.gold {
+         background: #e7bd7d;
+         color: #493a2b;
+      }
+
+      .btn.gold:hover {
+         background: #dbad68;
+      }
+
+      .btn.line {
+         background: none;
+         color: #8f523d;
+         border: 1.5px solid #c58c6a;
+      }
+
+      .btn.line:hover {
+         background: #f8eee4;
+      }
+
+      .grid {
+         display: grid;
+         gap: 14px;
+         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+
+      .card {
+         background: var(--card);
+         border: 1px solid var(--line);
+         border-radius: 16px;
+         padding: 18px;
+         box-shadow: 0 5px 18px rgba(74, 54, 38, .035);
+      }
+
+      .card.top {
+         border-top: 3px solid var(--gold);
+      }
+
+      .ex {
+         background: var(--warnbg);
+         border-left: 3px solid var(--gold);
+         padding: 8px 12px;
+         border-radius: 6px;
+         font-size: 14.5px;
+         margin-top: 10px;
+      }
+
+      .ic {
+         font-size: 26px;
+      }
+
+      .mut {
+         color: var(--mut);
+      }
+
+      .opt {
+         display: flex;
+         gap: 10px;
+         align-items: flex-start;
+         padding: 12px 14px;
+         border: 1.5px solid var(--line);
+         border-radius: 11px;
+         margin: 8px 0;
+         cursor: pointer;
+         background: var(--card);
+         transition: transform .12s;
+      }
+
+      .opt:hover {
+         border-color: #a85f43;
+         background: #fffaf1;
+         transform: translateX(4px);
+      }
+
+      .opt input {
+         margin-top: 5px;
+      }
+
+      .opt.sel {
+         border-color: #a85f43;
+         background: #fbf0e5;
+      }
+
+      .fb {
+         padding: 14px;
+         border-radius: 10px;
+         margin: 12px 0;
+      }
+
+      .fb.ok {
+         background: var(--okbg);
+         color: var(--ink);
+         border-left: 4px solid var(--ok);
+      }
+
+      .fb.warn {
+         background: var(--warnbg);
+         border-left: 4px solid var(--gold);
+      }
+
+      .fb.bad {
+         background: var(--badbg);
+         border-left: 4px solid var(--bad);
+      }
+
+      .prog {
+         height: 8px;
+         background: var(--line);
+         border-radius: 8px;
+         overflow: hidden;
+         margin: 8px 0 16px;
+      }
+
+      .prog div {
+         height: 100%;
+         background: var(--gold);
+         width: 0;
+         transition: width .3s;
+      }
+
+      .big {
+         font-size: 52px;
+         font-weight: 800;
+         color: #8f523d;
+         line-height: 1;
+      }
+
+      .q {
+         margin: 14px 0;
+      }
+
+      .pill {
+         display: inline-block;
+         background: #eee0d1;
+         color: #704a37;
+         border-radius: 99px;
+         padding: 2px 12px;
+         font-size: 13px;
+      }
+
+      .hud {
+         display: flex;
+         gap: 16px;
+         align-items: center;
+         flex-wrap: wrap;
+         background: #6e4636;
+         color: #fff;
+         border-radius: 14px;
+         padding: 10px 14px;
+         margin-bottom: 12px;
+         font-weight: 600;
+      }
+
+      .meter {
+         flex: 1;
+         min-width: 180px;
+      }
+
+      .meter small {
+         display: block;
+         font-weight: 500;
+         color: #f3e4d5;
+      }
+
+      .mb {
+         height: 10px;
+         background: #ffffff33;
+         border-radius: 8px;
+         overflow: hidden;
+      }
+
+      .mb div {
+         height: 100%;
+         transition: width .5s;
+      }
+
+      .stage {
+         display: flex;
+         gap: 14px;
+         align-items: center;
+         margin: 8px 0 12px;
+      }
+
+      .scene {
+         font-size: 44px;
+         line-height: 1;
+         background: #fffaf1;
+         border: 2px solid #e0b875;
+         border-radius: 16px;
+         padding: 10px 14px;
+         display: inline-block;
+      }
+
+      .bubble {
+         display: flex;
+         gap: 12px;
+         align-items: center;
+         background: var(--card);
+         border: 1.5px dashed #c58c6a;
+         border-radius: 14px;
+         padding: 10px 14px;
+         margin: 12px 0;
+         animation: pop .35s;
+      }
+
+      .bubble span {
+         font-size: 34px;
+      }
+
+      .bubble p {
+         margin: 0;
+      }
+
+      .bd {
+         display: inline-block;
+         border: 1px dashed var(--line);
+         border-radius: 99px;
+         padding: 4px 12px;
+         margin: 3px;
+         font-size: 14px;
+         color: var(--mut);
+      }
+
+      .bd.on {
+         border: 1.5px solid var(--gold);
+         background: var(--warnbg);
+         color: var(--ink);
+         font-weight: 600;
+      }
+
+      @keyframes pop {
+         from {
+            transform: scale(.92);
+            opacity: 0;
+         }
+
+         to {
+            transform: none;
+            opacity: 1;
+         }
+      }
+
+      .nar {
+         background: var(--warnbg);
+         border-left: 3px solid var(--gold);
+         padding: 10px 14px;
+         border-radius: 8px;
+         margin: 10px 0;
+      }
+
+      .msg {
+         display: flex;
+         gap: 10px;
+         align-items: flex-end;
+         margin: 12px 0;
+         animation: pop .3s;
+      }
+
+      .msg.r {
+         flex-direction: row-reverse;
+      }
+
+      .av {
+         width: 46px;
+         height: 46px;
+         border-radius: 50%;
+         display: grid;
+         place-items: center;
+         font-size: 26px;
+         flex: none;
+         border: 2px solid #d9b69c;
+      }
+
+      .av.sm {
+         width: 38px;
+         height: 38px;
+         font-size: 22px;
+      }
+
+      .bub {
+         background: var(--card);
+         border: 1.5px solid #e4c7b2;
+         border-radius: 16px 16px 16px 4px;
+         padding: 8px 14px;
+         max-width: 78%;
+      }
+
+      .msg.r .bub {
+         border-radius: 16px 16px 4px 16px;
+      }
+
+      .bub p {
+         margin: 2px 0 0;
+      }
+
+      .bub b {
+         color: #8f523d;
+         font-size: 14px;
+      }
+
+      .opt.ch {
+         align-items: center;
+      }
+
+      footer {
+         text-align: center;
+         color: var(--mut);
+         font-size: 13px;
+         padding: 20px;
+         border-top: 1px solid var(--line);
+         background: rgba(255, 253, 248, .7);
+      }
+
+      button:focus-visible,
+      input:focus-visible {
+         outline: 3px solid rgba(213, 154, 82, .55);
+         outline-offset: 3px;
+      }
+
+      @media(max-width:600px) {
+         main {
+            padding: 18px 14px 40px;
+         }
+
+         .hero {
+            padding-top: 25px;
+         }
+
+         .hud {
+            gap: 10px;
+         }
+
+         .big {
+            font-size: 44px;
+         }
+      }
+
+      @media(prefers-reduced-motion:reduce) {
+         * {
+            animation: none !important;
+            transition: none !important;
+         }
+      }
+   </style>
+</head>
+
+<body>
+   <header>
+      <div class="bar">
+         <button class="logo" data-go="beranda"><i>★</i>Jejak Pancasila</button>
+         <button id="burger" aria-label="Menu">☰</button>
+         <nav id="nav">
+            <button data-go="beranda">Beranda</button>
+            <button data-go="materi">Materi</button>
+            <button data-go="simulasi">Simulasi Kasus</button>
+            <button data-go="evaluasi">Evaluasi</button>
+            <button data-go="tentang">Tentang</button>
+         </nav>
+      </div>
+   </header>
+   <main>
+      <section id="beranda" class="on">
+         <div class="hero">
+            <span class="tag">Media Pembelajaran Pendidikan Pancasila</span>
+            <h1>Memahami Pancasila sebagai Ideologi Negara</h1>
+            <p class="mut" style="max-width:640px">Belajar lewat situasi nyata: baca kasus, ambil keputusan, lalu
+               pelajari alasan ideologisnya. Bukan sekadar menghafal lima sila, tetapi memahami bagaimana Pancasila
+               menjadi pedoman hidup berbangsa dan bernegara.</p>
+            <button class="btn gold" data-go="simulasi">Mulai Simulasi</button>
+            <button class="btn line" data-go="materi">Baca Materi</button>
+         </div>
+         <h2>Mengapa Pancasila penting sebagai ideologi?</h2>
+         <div class="card top">
+            <p style="margin:0">Indonesia terdiri dari ribuan pulau, ratusan suku, dan beragam agama serta budaya.
+               Ideologi dibutuhkan agar keberagaman itu punya arah dan pedoman bersama. Pancasila menjadi titik temu:
+               dasar negara, pandangan hidup, sekaligus pemersatu bangsa.</p>
+         </div>
+         <h2>Fitur</h2>
+         <div class="grid">
+            <div class="card">
+               <div class="ic">📘</div>
+               <h3>Materi</h3>
+               <p class="mut">Enam topik ringkas dengan contoh sederhana.</p>
+            </div>
+            <div class="card">
+               <div class="ic">🧭</div>
+               <h3>Simulasi Kasus</h3>
+               <p class="mut">Lima kasus pengambilan keputusan dengan umpan balik edukatif.</p>
+            </div>
+            <div class="card">
+               <div class="ic">📝</div>
+               <h3>Evaluasi</h3>
+               <p class="mut">Kuis pengetahuan dengan pembahasan tiap soal.</p>
+            </div>
+         </div>
+         <p id="prog" class="mut"></p>
+      </section>
+      <section id="materi">
+         <h1>Materi Pembelajaran</h1>
+         <p class="mut">Enam konsep inti Pancasila sebagai ideologi negara.</p>
+         <div class="grid" id="mgrid"></div>
+      </section>
+      <section id="simulasi">
+         <h1>Simulasi Kasus</h1>
+         <div id="sim"></div>
+      </section>
+      <section id="evaluasi">
+         <h1>Evaluasi Pengetahuan</h1>
+         <p class="mut">Menguji pemahaman konsep, berbeda dari simulasi yang menguji pengambilan keputusan.</p>
+         <div id="quiz"></div>
+      </section>
+      <section id="tentang">
+         <h1>Tentang</h1>
+         <div class="card top">
+            <p><b>Jejak Pancasila</b> adalah media pembelajaran interaktif untuk mata kuliah Pendidikan Pancasila.
+               Fokusnya memahami Pancasila sebagai ideologi negara melalui simulasi kasus dan pengambilan keputusan.</p>
+            <p>Dibuat dengan HTML, CSS, dan JavaScript murni. Skor dan progres tersimpan di perangkat Anda melalui
+               localStorage dan tidak dikirim ke mana pun.</p>
+            <p class="mut">Catatan: banyak kasus nyata punya lebih dari satu jalan yang dapat dipertanggungjawabkan.
+               Pembahasan di sini bersifat pembelajaran, bukan jawaban mutlak.</p>
+            <button class="btn line" id="reset">Hapus Skor &amp; Progres</button>
+         </div>
+      </section>
+   </main>
+   <footer>Jejak Pancasila · Media Pembelajaran Pendidikan Pancasila</footer>
+   <script>
+      const $ = s => document.querySelector(s);
+      let S = {};
+      try { S = JSON.parse(localStorage.getItem("jp") || "{}"); } catch (e) { }
+      function save() {
+         try { localStorage.setItem("jp", JSON.stringify(S)); } catch (e) { }
+      }
+
+      /* Navigasi */
+      function go(id) {
+         document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === id));
+         document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.go === id));
+         $("#nav").classList.remove("open");
+         window.scrollTo(0, 0);
+         if (id === "beranda") prog();
+      }
+      document.addEventListener("click", e => {
+         const b = e.target.closest("[data-go]");
+         if (b) go(b.dataset.go);
+      });
+      $("#burger").onclick = () => $("#nav").classList.toggle("open");
+
+      function prog() {
+         const a = [];
+         if (S.sim) a.push("Simulasi terakhir: " + S.sim.nilai + "/100");
+         if (S.quiz != null) a.push("Skor kuis terakhir: " + S.quiz + "/" + Q.length);
+         $("#prog").textContent = a.length ? "Progres Anda → " + a.join(" · ") : "";
+      }
+
+      /* Materi */
+      const M = [
+         ["🔎", "1. Pengertian Ideologi", "Ideologi adalah sistem gagasan dan nilai yang menjadi pedoman arah hidup suatu bangsa dalam bernegara.", "Seperti peta dan kompas untuk perjalanan bersama: tanpa itu, tiap orang berjalan ke arah sendiri."],
+         ["🏛️", "2. Pancasila sebagai Ideologi Negara", "Pancasila adalah dasar negara, pandangan hidup, dan ideologi nasional yang digali dari nilai-nilai bangsa Indonesia sendiri. Kedudukannya mengikat seluruh penyelenggaraan negara.", "Semua undang-undang harus sejalan dengan nilai Pancasila."],
+         ["🧭", "3. Fungsi Pancasila", "Sebagai pedoman dan arah kehidupan bernegara, pemersatu bangsa, tolok ukur kebijakan, serta pembeda identitas bangsa Indonesia dari bangsa lain.", "Beragam suku dan agama dapat hidup berdampingan dalam satu negara."],
+         ["🌱", "4. Ideologi Terbuka", "Nilai dasarnya tetap, tetapi penjabaran dan penerapannya dapat berkembang mengikuti zaman, tanpa meninggalkan jati diri.", "Teknologi AI boleh dipakai, dengan aturan etika yang berpijak pada nilai Pancasila."],
+         ["🪜", "5. Nilai Dasar, Instrumental, Praksis", "Nilai dasar: hakikat kelima sila (tetap). Nilai instrumental: aturan pelaksanaan seperti UUD dan UU. Nilai praksis: penerapan nyata dalam perilaku sehari-hari.", "Sila ke-4 → AD/ART organisasi → rapat yang saling mendengar."],
+         ["⚡", "6. Tantangan di Era Modern", "Hoaks, polarisasi media sosial, individualisme, kesenjangan sosial, serta arus budaya global yang dapat melemahkan rasa kebersamaan.", "Unggahan provokatif yang viral dalam hitungan menit dan memecah kelompok."]
+      ];
+      $("#mgrid").innerHTML = M.map(m =>
+         `<div class="card top"><div class="ic">${m[0]}</div><h3>${m[1]}</h3><p>${m[2]}</p><div class="ex"><b>Contoh:</b> ${m[3]}</div></div>`
+      ).join("");
+
+      /* Data simulasi kasus */
+      const C = [
+         {
+            t: "Kasus 1: Perbedaan Pendapat dalam Musyawarah",
+            c: "Sebuah organisasi mahasiswa harus menentukan tema kegiatan tahunan. Anggota terbagi menjadi dua kubu yang sama kuat dan rapat mulai memanas.",
+            p: "Bagaimana cara mengambil keputusan yang sesuai dengan Pancasila?",
+            k: "Sila ke-4 mengutamakan musyawarah mufakat. Voting dapat menjadi jalan terakhir yang disepakati bersama.",
+            r: "Sila ke-4 dan nilai dasar, instrumental, praksis",
+            o: [
+               ["Ketua langsung memutuskan agar rapat cepat selesai.", 0, "Keputusan sepihak mengabaikan hak anggota untuk didengar."],
+               ["Menunda rapat tanpa batas waktu sampai semua orang setuju sepenuhnya.", 0, "Musyawarah perlu tetap menghasilkan keputusan."],
+               ["Semua anggota diberi kesempatan bicara, dicari titik temu, dan bila buntu memakai voting yang disepakati bersama.", 20, "Tepat. Musyawarah diutamakan, voting menjadi jalan terakhir yang disepakati."],
+               ["Langsung voting tanpa diskusi agar cepat.", 10, "Voting dapat dibenarkan, tetapi dialog dan saling mendengar perlu diutamakan."]
+            ]
+         },
+         {
+            t: "Kasus 2: Toleransi dalam Keberagaman",
+            c: "Di sebuah lingkungan RT, sebuah keluarga minoritas hendak mengadakan ibadah dan perayaan keagamaan di rumahnya. Sebagian warga keberatan karena belum terbiasa.",
+            p: "Tindakan apa yang menghormati keberagaman dan menjaga persatuan?",
+            k: "Sila ke-1 dan ke-3 saling menguatkan. Kebebasan beribadah harus dihormati dan persatuan dijaga.",
+            r: "Pancasila sebagai pemersatu bangsa",
+            o: [
+               ["Melarang kegiatan itu demi menghindari keributan.", 0, "Melarang berarti mengabaikan hak beribadah."],
+               ["Memfasilitasi dialog bersama RT, menjamin hak beribadah, dan menyepakati aturan wajar.", 20, "Tepat. Hak dijamin dan persatuan dijaga lewat dialog yang adil."],
+               ["Tidak ikut campur dan membiarkan warga menyelesaikannya sendiri.", 10, "Sikap pasif tidak membantu kelompok yang menghadapi tekanan."],
+               ["Ikut mendukung warga yang keberatan agar tidak dianggap berbeda.", 0, "Mengikuti tekanan mayoritas bertentangan dengan toleransi."]
+            ]
+         },
+         {
+            t: "Kasus 3: Persatuan di Era Digital",
+            c: "Di grup kampus beredar unggahan viral yang menyebut suku tertentu sebagai penyebab masalah. Isinya belum jelas kebenarannya dan komentar mulai saling serang.",
+            p: "Apa tindakan yang bertanggung jawab?",
+            k: "Hoaks dan ujaran kebencian dapat merusak persatuan. Warga perlu menjaga ruang digital.",
+            r: "Tantangan penerapan Pancasila di era digital",
+            o: [
+               ["Ikut menyebarkan agar teman-teman lain waspada.", 0, "Menyebarkan informasi yang belum terverifikasi memperluas dampak hoaks."],
+               ["Membalas dengan menghina kelompok pengunggah.", 0, "Membalas kebencian dengan kebencian memperkeruh keadaan."],
+               ["Keluar dari grup dan tidak peduli lagi.", 10, "Menghindari konflik tidak membantu meluruskan informasi."],
+               ["Tidak menyebarkan, memeriksa fakta, melaporkan ke admin, dan menanggapi dengan santun.", 20, "Tepat. Langkah ini menahan penyebaran hoaks dan menjaga persatuan."]
+            ]
+         },
+         {
+            t: "Kasus 4: Keadilan dalam Kebijakan Publik",
+            c: "Pemerintah daerah ingin menertibkan pasar kaget demi kelancaran lalu lintas. Warga sekitar mendukung, namun ratusan pedagang kecil kehilangan penghasilan.",
+            p: "Alternatif keputusan mana yang paling adil?",
+            k: "Sila ke-5 menuntut keadilan sosial. Kebijakan perlu menimbang kepentingan umum dan perlindungan kelompok rentan.",
+            r: "Pancasila sebagai pedoman penyelenggaraan negara",
+            o: [
+               ["Mendengar pedagang dan warga, menyediakan relokasi layak, masa transisi, serta pendampingan usaha.", 20, "Tepat. Kepentingan umum dijaga tanpa mengabaikan pedagang kecil."],
+               ["Membatalkan penertiban sepenuhnya karena pedagang terdampak.", 10, "Kepentingan pedagang penting, tetapi kepentingan umum juga perlu diperhatikan."],
+               ["Melaksanakan tanpa dialog karena sudah sesuai aturan.", 0, "Kebijakan perlu memperhatikan dampak dan melibatkan pihak terdampak."],
+               ["Mengutamakan pihak yang paling berpengaruh dalam keputusan.", 0, "Keputusan harus berdasarkan keadilan, bukan pengaruh."]
+            ]
+         },
+         {
+            t: "Kasus 5: Pancasila sebagai Ideologi Terbuka",
+            c: "Kampus mulai memakai kecerdasan buatan dan mengikuti tren budaya global. Sebagian dosen khawatir nilai kebangsaan luntur, sebagian lain ingin menerima semuanya.",
+            p: "Bagaimana nilai Pancasila tetap menjadi pedoman tanpa menolak perubahan?",
+            k: "Nilai dasar Pancasila tetap, sedangkan aturan dan penerapannya dapat menyesuaikan perkembangan zaman.",
+            r: "Ideologi terbuka dan hubungan nilai dasar, instrumental, praksis",
+            o: [
+               ["Menolak semua teknologi dan budaya asing demi menjaga kemurnian.", 0, "Menolak semua perubahan menutup kemampuan bangsa beradaptasi."],
+               ["Menerima semuanya tanpa seleksi karena zaman pasti berubah.", 0, "Keterbukaan bukan berarti menerima perubahan tanpa batas."],
+               ["Memakai teknologi dengan aturan dan etika yang berakar pada nilai Pancasila.", 20, "Tepat. Penerapan menyesuaikan zaman, nilai dasar tetap menjadi landasan."],
+               ["Memakai seperlunya saja, urusan nilai diserahkan ke pribadi masing-masing.", 10, "Teknologi dapat digunakan, tetapi tetap perlu pedoman bersama."]
+            ]
+         }
+      ];
+
+      const LV = [
+         ["🏛️", "Ruang Rapat BEM", "🗣️ Juru Musyawarah"],
+         ["🏘️", "Lingkungan RT", "🤝 Penjaga Toleransi"],
+         ["📱", "Grup Media Sosial", "📱 Pejuang Digital"],
+         ["⚖️", "Balai Kota", "⚖️ Penegak Keadilan"],
+         ["🚀", "Kampus Masa Depan", "🌱 Pelopor Zaman"]
+      ];
+      const NPC = {
+         20: ["😊", "Warga merasa didengar dan makin percaya padamu!"],
+         10: ["😐", "Warga ragu. Sebagian lega, sebagian masih mempertanyakan."],
+         0: ["😟", "Warga kecewa dan kepercayaan mereka menurun."]
+      };
+      const CAST = [
+         ["Rani", "👩", "#f3b6d3"],
+         ["Dimas", "👨", "#e9c49b"],
+         ["Bayu", "🧑", "#f5d08a"],
+         ["Sinta", "👩‍🦱", "#a7cbb1"]
+      ];
+      const DL = [
+         [
+            "Aku ketua, biar aku yang putuskan sekarang supaya rapat cepat selesai.",
+            "Jangan diputuskan dulu. Tunda saja sampai semua setuju, berapa lama pun.",
+            "Kita dengarkan semua dulu dan cari titik temu. Kalau buntu, voting yang kita sepakati bersama.",
+            "Langsung voting saja, tidak usah diskusi panjang."
+         ],
+         [
+            "Larang saja kegiatannya, biar tidak ribut.",
+            "Ayo duduk bersama pengurus RT. Hak beribadah dijamin, soal waktu dan suara kita sepakati bersama.",
+            "Itu urusan mereka sendiri, kita tidak perlu ikut campur.",
+            "Aku ikut warga yang keberatan saja, biar tidak dianggap beda."
+         ],
+         [
+            "Sebarkan saja ke grup lain, biar semua waspada!",
+            "Balas saja, hina balik kelompok yang mengunggah!",
+            "Aku keluar grup saja, malas ikut ribut.",
+            "Jangan disebar dulu. Cek faktanya, laporkan ke admin, lalu tanggapi dengan santun."
+         ],
+         [
+            "Dengarkan pedagang dan warga dulu, siapkan relokasi layak dan pendampingan usaha.",
+            "Batalkan saja penertibannya, kasihan pedagang.",
+            "Laksanakan saja, sudah sesuai aturan, tidak perlu dialog.",
+            "Ikuti saja kemauan pihak yang paling berpengaruh."
+         ],
+         [
+            "Tolak semua teknologi dan budaya asing, kita harus murni!",
+            "Terima semuanya, zaman pasti berubah.",
+            "Pakai teknologinya, tapi atur etikanya dengan nilai Pancasila. Nilai dasar tetap, penerapan menyesuaikan.",
+            "Pakai seperlunya saja, urusan nilai terserah masing-masing."
+         ]
+      ];
+
+      let G, sel = -1, done = false;
+      function newGame() {
+         G = { i: 0, hp: 60, xp: 0, streak: 0, pts: [], badge: [], on: false };
+      }
+      newGame();
+
+      function who(k, i) { return CAST[(i + k) % 4]; }
+      function hud() {
+         const h = Math.max(0, Math.min(100, G.hp));
+         const w = h > 50 ? "var(--ok)" : h > 25 ? "var(--gold)" : "var(--red)";
+         return `<div class="hud"><span>⭐ ${G.xp} XP</span><span>🔥 Streak ${G.streak}</span><div class="meter"><small>🤝 Kepercayaan Warga ${h}%</small><div class="mb"><div style="width:${h}%;background:${w}"></div></div></div></div>`;
+      }
+
+      function sim() {
+         const b = $("#sim");
+         if (!G.on) {
+            b.innerHTML = `<div class="card top"><div class="scene">🎮</div><h3>Misi: Jaga Persatuan</h3><p>Ikuti kisah interaktif di lima tempat berbeda. Simak dialog empat tokoh, lalu pilih pendapat yang paling sesuai dengan nilai Pancasila. Jaga Kepercayaan Warga, kumpulkan XP dan lencana.</p><button class="btn gold" id="go">Mulai Misi</button></div>`;
+            $("#go").onclick = () => { G.on = true; sim(); };
+            return;
+         }
+         if (G.i >= C.length || G.hp <= 0) { end(b); return; }
+         const k = G.i, c = C[k], l = LV[k];
+         const ord = [0, 1, 2, 3].sort(() => Math.random() - .5);
+         sel = -1; done = false;
+         b.innerHTML = hud() + `<div class="stage"><div class="scene">${l[0]}</div><div><span class="pill">Level ${k + 1} dari ${C.length}</span><h3 style="margin:4px 0 0">${l[1]}</h3></div></div>
+ <div class="card top"><h3>${c.t}</h3><div class="nar">📖 ${c.c}</div><div id="chat"></div>
+ <button class="btn line" id="lanjut">Lanjut ▶</button>
+ <div id="pilih" hidden><div class="nar">🤔 <b>${c.p}</b><br>Pilih pendapat yang paling sesuai dengan nilai Pancasila.</div>
+ <div id="opts">${ord.map(i => { const w = who(k, i); return `<label class="opt ch"><input type="radio" name="o" value="${i}"><span class="av sm" style="background:${w[2]}">${w[1]}</span><span><b>${w[0]}</b><br>${DL[k][i]}</span></label>`; }).join("")}</div>
+ <button class="btn" id="cek" disabled>Periksa Jawaban</button><div id="hasil"></div></div></div>`;
+         let n = 0;
+         function say() {
+            if (n >= 4) return;
+            const i = ord[n], w = who(k, i);
+            $("#chat").insertAdjacentHTML("beforeend", `<div class="msg ${n % 2 ? "r" : ""}"><div class="av" style="background:${w[2]}">${w[1]}</div><div class="bub"><b>${w[0]}</b><p>${DL[k][i]}</p></div></div>`);
+            n++;
+            if (n === 4) { $("#lanjut").style.display = "none"; $("#pilih").hidden = false; }
+            $("#chat").lastElementChild.scrollIntoView({ block: "nearest", behavior: "smooth" });
+         }
+         say();
+         $("#lanjut").onclick = say;
+         document.querySelectorAll("#opts input").forEach(r => {
+            r.onchange = () => {
+               sel = Number(r.value);
+               $("#cek").disabled = false;
+               document.querySelectorAll("#opts .opt").forEach(x => x.classList.toggle("sel", x.contains(r) && r.checked));
+            };
+         });
+         $("#cek").onclick = cek;
+      }
+
+      function cek() {
+         if (sel < 0 || done) return;
+         done = true;
+         const c = C[G.i], o = c.o[sel], p = o[1];
+         G.pts[G.i] = p;
+         let gain = 0, bonus = "";
+         if (p === 20) {
+            gain = 100 + 20 * G.streak;
+            G.streak++;
+            G.hp += 15;
+            G.badge[G.i] = 1;
+            if (G.streak > 1) bonus = ` 🔥 Streak ${G.streak}! Bonus +${20 * (G.streak - 1)}.`;
+         } else {
+            G.streak = 0;
+            gain = p === 10 ? 50 : 0;
+            G.hp += p === 10 ? -5 : -20;
+         }
+         G.hp = Math.min(100, G.hp);
+         G.xp += gain;
+         $(".hud").outerHTML = hud();
+         document.querySelectorAll("#opts input").forEach(r => r.disabled = true);
+         $("#cek").style.display = "none";
+         const cls = p === 20 ? "ok" : p === 10 ? "warn" : "bad";
+         const lab = p === 20 ? "Sangat sesuai" : p === 10 ? "Sebagian sesuai" : "Kurang sesuai";
+         const bi = c.o.findIndex(x => x[1] === 20);
+         const best = p < 20 ? `<p><b>Pendapat yang paling sesuai:</b> ${who(G.i, bi)[0]}, yaitu ${c.o[bi][0]}</p>` : "";
+         const last = G.hp <= 0 ? "Lihat Hasil" : G.i < C.length - 1 ? "Level Berikutnya" : "Lihat Hasil Akhir";
+         $("#hasil").innerHTML = `<div class="bubble"><span>${NPC[p][0]}</span><p>${NPC[p][1]}<br><b>+${gain} XP</b>${bonus}${p === 20 ? "<br>🏅 Lencana: " + LV[G.i][2] : ""}</p></div>
+ <div class="fb ${cls}"><b>${lab}</b> (kamu memilih pendapat ${who(G.i, sel)[0]})<p>${o[2]}</p>${best}</div>
+ <div class="fb ok"><b>Konsep Pancasila:</b> ${c.k}</div>
+ <button class="btn" id="next">${last}</button>`;
+         $("#next").onclick = () => { G.i++; sim(); window.scrollTo(0, 0); };
+      }
+
+      function end(b) {
+         const sum = G.pts.reduce((a, x) => a + x, 0);
+         const ok = G.pts.filter(x => x === 20).length;
+         const gagal = G.hp <= 0;
+         const gelar = sum >= 80 ? "Duta Pancasila" : sum >= 50 ? "Penjaga Persatuan" : "Pemula Peduli";
+         const rev = [...new Set(C.filter((c, i) => G.pts[i] !== undefined && G.pts[i] < 20).map(c => c.r))];
+         if (!gagal) { S.sim = { nilai: sum, benar: ok }; save(); }
+         b.innerHTML = `<div class="card top"><div class="scene">${gagal ? "💔" : "🏆"}</div><h3>${gagal ? "Kepercayaan Warga Habis" : "Misi Selesai!"}</h3>
+ <p>${gagal ? "Beberapa keputusan kurang sesuai dengan nilai Pancasila. Pelajari pembahasannya lalu coba lagi." : "Gelarmu: <b>" + gelar + "</b>"}</p>
+ <p>⭐ Total XP: <b>${G.xp}</b> · Nilai belajar: <b>${sum}/100</b> · Jawaban paling tepat: <b>${ok}</b> dari ${C.length}</p>
+ <div>${LV.map((l, i) => `<span class="bd ${G.badge[i] ? "on" : ""}">${G.badge[i] ? l[2] : "🔒 Level " + (i + 1)}</span>`).join("")}</div>
+ <h3>Materi yang perlu dipelajari kembali</h3>${rev.length ? "<ul>" + rev.map(r => "<li>" + r + "</li>").join("") + "</ul>" : "<p>Pemahamanmu sudah sangat baik. Lanjut ke Evaluasi!</p>"}
+ <button class="btn" id="ulang">Main Lagi</button> <button class="btn line" data-go="materi">Buka Materi</button> <button class="btn gold" data-go="evaluasi">Ke Evaluasi</button></div>`;
+         $("#ulang").onclick = () => { newGame(); G.on = true; sim(); };
+      }
+      sim();
+
+      /* Evaluasi */
+      const Q = [
+         ["Ideologi dalam kehidupan bernegara paling tepat diartikan sebagai...", ["Kumpulan peraturan hukum tertulis", "Sistem gagasan dan nilai yang menjadi pedoman arah hidup bangsa", "Pendapat pemimpin negara", "Tradisi budaya daerah tertentu"], 1, "Ideologi adalah sistem gagasan dan nilai yang menjadi pedoman dan arah kehidupan bersama."],
+         ["Selain sebagai dasar negara, Pancasila juga berkedudukan sebagai...", ["Pandangan hidup dan ideologi nasional", "Undang-undang tertinggi", "Hanya simbol kenegaraan", "Aturan khusus pemerintah pusat"], 0, "Pancasila berkedudukan sebagai dasar negara, pandangan hidup bangsa, dan ideologi nasional."],
+         ["Fungsi Pancasila sebagai pemersatu bangsa terlihat ketika...", ["Semua budaya diseragamkan", "Perbedaan suku dan agama disatukan dalam komitmen kebangsaan", "Hanya satu kelompok menentukan kebijakan", "Perbedaan pendapat dilarang"], 1, "Pancasila mempersatukan keberagaman tanpa menyeragamkannya."],
+         ["Makna Pancasila sebagai ideologi terbuka adalah...", ["Semua nilai bisa diganti sesuai zaman", "Nilai dasar tetap, penerapannya dapat berkembang", "Pancasila tidak boleh dikaitkan dengan perubahan", "Setiap kelompok boleh menafsirkan sesuka hati"], 1, "Nilai dasar tetap, sedangkan penerapan dapat menyesuaikan perkembangan zaman."],
+         ["Contoh nilai instrumental Pancasila adalah...", ["Hakikat sila ke-5", "Sikap menolong tetangga", "Undang-undang dan peraturan pelaksanaannya", "Semangat gotong royong"], 2, "Nilai instrumental adalah penjabaran nilai dasar dalam bentuk aturan."],
+         ["Tantangan berat penerapan Pancasila di era digital adalah...", ["Terbatasnya buku pelajaran", "Hoaks dan polarisasi di media sosial", "Banyaknya hari libur nasional", "Kemajuan teknologi itu sendiri"], 1, "Hoaks dan ujaran kebencian dapat memecah persatuan."]
+      ];
+
+      function quiz() {
+         const b = $("#quiz");
+         b.innerHTML = Q.map((q, i) => `<div class="card q"><b>${i + 1}. ${q[0]}</b>${q[1].map((o, j) => `<label class="opt"><input type="radio" name="q${i}" value="${j}"><span>${o}</span></label>`).join("")}<div id="e${i}"></div></div>`).join("") + `<button class="btn" id="kirim">Kirim Jawaban</button><div id="skor"></div>`;
+         $("#kirim").onclick = () => {
+            let s = 0;
+            if (Q.some((q, i) => !document.querySelector(`input[name="q${i}"]:checked`))) {
+               $("#skor").innerHTML = '<p style="color:var(--bad)">Jawab semua pertanyaan terlebih dahulu.</p>';
+               return;
+            }
+            Q.forEach((q, i) => {
+               const v = Number(document.querySelector(`input[name="q${i}"]:checked`).value);
+               const ok = v === q[2];
+               if (ok) s++;
+               document.querySelectorAll(`input[name="q${i}"]`).forEach(r => r.disabled = true);
+               $("#e" + i).innerHTML = `<div class="fb ${ok ? "ok" : "bad"}"><b>${ok ? "Benar" : "Kurang tepat"}</b>${ok ? "" : ". Jawaban benar: " + q[1][q[2]]}<p style="margin:6px 0 0">${q[3]}</p></div>`;
+            });
+            S.quiz = s; save();
+            $("#kirim").style.display = "none";
+            $("#skor").innerHTML = `<div class="card top"><div class="big">${s}<span class="mut" style="font-size:22px">/${Q.length}</span></div><p>${s >= 5 ? "Pemahaman konsep Anda sangat baik." : s >= 3 ? "Cukup baik. Baca ulang bagian materi yang masih kurang." : "Yuk, pelajari kembali materinya."}</p><button class="btn" id="ulangq">Ulangi Kuis</button> <button class="btn line" data-go="materi">Buka Materi</button></div>`;
+            $("#ulangq").onclick = () => { quiz(); window.scrollTo(0, 0); };
+         };
+      }
+      quiz();
+
+      $("#reset").onclick = () => {
+         if (confirm("Hapus semua skor dan progres?")) {
+            S = {};
+            try { localStorage.removeItem("jp"); } catch (e) { }
+            newGame();
+            sim();
+            quiz();
+            prog();
+            alert("Data dihapus.");
+         }
+      };
+      document.querySelector('nav button[data-go="beranda"]').classList.add("on");
+      prog();
+   </script>
+</body>
+
+</html>
